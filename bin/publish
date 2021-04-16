@@ -19,6 +19,8 @@ gem push *.gem
 #rake release
 
 version=`< VERSION`
+echo "VEEEEERSION"
+echo $version
 #GITHUB_TOKEN=${GITHUB_TOKEN} hub release create -a ${ARTIFACTS_OUTPUT} -m "v${VERSION}" ${VERSION}
 tar -c -f binaries *.gem
 GITHUB_TOKEN=${GITHUB_TOKEN} hub release create -a ../binaries -m "v${version}" ${version}
