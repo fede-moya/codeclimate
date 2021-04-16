@@ -22,8 +22,7 @@ jobs:
       - checkout
       - run:
           command: |
-            git diff --quiet HEAD~ VERSION
-            if [ $? == 1 ]; then
+            if [ `git diff --quiet HEAD~ VERSION; echo $?` == 1 ]; then
               ./bin/publish
             fi
 
