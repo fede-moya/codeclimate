@@ -33,6 +33,6 @@ workflows:
       - build_test
       - publish
 
-notify:
-  webhooks:
-    - url: https://cc-slack-proxy.herokuapp.com/circle
+        #notify:
+        #  webhooks:
+        #    - url: https://cc-slack-proxy.herokuapp.com/circle
