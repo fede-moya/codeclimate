@@ -7,6 +7,7 @@
 set -e
 set -o nounset
 set -o errexit
+#set -o pipefail
 
 mkdir -p $HOME/.gem
 touch $HOME/.gem/credentials
@@ -17,8 +18,10 @@ gem push *.gem
 
 #rake release
 
-
-#version=$(< VERSION)
+version=$(< VERSION)
+#GITHUB_TOKEN=${GITHUB_TOKEN} hub release create -a ${ARTIFACTS_OUTPUT} -m "v${VERSION}" ${VERSION}
+tar -c -f binaries *.gem
+GITHUB_TOKEN=${GITHUB_TOKEN} hub release create -a binaries -m "v${version}" ${version}
 
 #docker build --rm --tag codeclimate/codeclimate .
 #docker push codeclimate/codeclimate:latest

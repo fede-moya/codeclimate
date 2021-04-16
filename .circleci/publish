@@ -15,10 +15,13 @@ chmod 0600 $HOME/.gem/credentials
 printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
 gem build *.gemspec
 gem push *.gem
-rake release
 
+#rake release
 
-#version=$(< VERSION)
+version=$(< VERSION)
+#GITHUB_TOKEN=${GITHUB_TOKEN} hub release create -a ${ARTIFACTS_OUTPUT} -m "v${VERSION}" ${VERSION}
+tar -c -f binaries *.gem
+GITHUB_TOKEN=${GITHUB_TOKEN} hub release create -a binaries -m "v${version}" ${version}
 
 #docker build --rm --tag codeclimate/codeclimate .
 #docker push codeclimate/codeclimate:latest
