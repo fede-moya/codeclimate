@@ -22,8 +22,9 @@ jobs:
       - checkout
       - run:
           command: |
-            if [ "git diff --quiet HEAD~ VERSION" ]; then
-              sh .circleci/publish
+            git diff --quiet HEAD~ VERSION
+            if [ $? == 1 ]; then
+              ./bin/publish
             fi
 
 workflows:
