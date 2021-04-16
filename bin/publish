@@ -18,7 +18,7 @@ gem push *.gem
 
 #rake release
 
-version=`< VERSION`
+version=$(cat VERSION)
 echo "VEEEEERSION"
 echo $version
 echo "VERSIOOON ?"
