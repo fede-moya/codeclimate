@@ -1,4 +1,11 @@
 version: 2
+
+init: &init
+  run:
+    name: init
+    command: |
+      echo '. .circleci/shared.bash' >> "$BASH_ENV"
+      . .circleci/shared.bash
 jobs:
   build_test:
     environment:
@@ -20,10 +27,9 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: |
-          sudo apt update && sudo apt install -y git wget
-          url="$(wget -qO- https://api.github.com/repos/github/hub/releases/latest | tr '"' '\n' | grep '.*/download/.*/hub-linux-amd64-.*.tgz')"
-          wget -qO- "$url" | sudo tar -xzvf- -C /usr/bin --strip-components=2 --wildcards "*/bin/hub"
+      - run: Install hub
+          name: Install Hub
+          command: install_hub
       - run:
           command: |
             if [ `git diff --quiet HEAD~ VERSION; echo $?` == 1 ]; then
