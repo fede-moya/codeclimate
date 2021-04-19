@@ -27,7 +27,7 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: Install hub
+      - run:
           name: Install Hub
           command: install_hub
       - run:
