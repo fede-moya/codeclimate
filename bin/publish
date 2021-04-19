@@ -1,14 +1,17 @@
 #!/bin/sh
 #
-# Publish new gem version and creates GH tag for it.
+# Publish new gem version, uploads docker images and creates GH tag.
 #
 ###
 
 set -e
 set -o nounset
 set -o errexit
-#set -o pipefail
 
+version=$(cat VERSION)
+ARTIFACTS_OUTPUT=artifacts.tar.gz
+
+# Build and publish gem
 mkdir -p $HOME/.gem
 touch $HOME/.gem/credentials
 chmod 0600 $HOME/.gem/credentials
@@ -16,38 +19,12 @@ printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentia
 gem build *.gemspec
 gem push *.gem
 
-#rake release
+# Create GH tab
+tar -c -f ${ARTIFACTS_OUTPUT} *.gem
+GITHUB_TOKEN=${GITHUB_TOKEN} hub release create -a ${ARTIFACTS_OUTPUT} -m "v${version}" ${version}
 
-version=$(cat VERSION)
-echo "VEEEEERSION"
-echo $version
-echo "VERSIOOON ?"
-#GITHUB_TOKEN=${GITHUB_TOKEN} hub release create -a ${ARTIFACTS_OUTPUT} -m "v${VERSION}" ${VERSION}
-tar -c -f binaries *.gem
-GITHUB_TOKEN=${GITHUB_TOKEN} hub release create -a binaries -m "v${version}" ${version}
-
+# Upload docker image
 #docker build --rm --tag codeclimate/codeclimate .
 #docker push codeclimate/codeclimate:latest
 #docker tag codeclimate/codeclimate "codeclimate/codeclimate:$version"
 #docker push "codeclimate/codeclimate:$version"
-
-
-
-
-
-
-
-
-#PROJECT_RELATIVE_PATH=src/github.com/codeclimate/test-reporter
-#            
-## Install go
-#curl -O https://dl.google.com/go/go1.15.darwin-amd64.tar.gz
-#tar -xzf go1.15.darwin-amd64.tar.gz
-#echo 'export PATH=$PATH:$PWD/go/bin' >> "$BASH_ENV"
-#
-## Set go path
-#mkdir -p ~/gopath/${PROJECT_RELATIVE_PATH}
-#echo 'export GOPATH=$HOME/gopath' >> "$BASH_ENV"
-#. "$BASH_ENV"
-#cd $GOPATH/${PROJECT_RELATIVE_PATH}
-#cp -r ~/project/ $GOPATH/${PROJECT_RELATIVE_PATH}
