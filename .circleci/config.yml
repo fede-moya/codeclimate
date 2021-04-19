@@ -6,6 +6,7 @@ init: &init
     command: |
       echo '. .circleci/shared.bash' >> "$BASH_ENV"
       . .circleci/shared.bash
+
 jobs:
   build_test:
     environment:
@@ -22,8 +23,6 @@ jobs:
       - run: make citest
 
   publish:
-    environment:
-      CC_TEST_REPORTER_ID: e70e48da820d9d23eeb2f1fd8c25f8691be05af308dd0ffce8d1ca7e48a5f799
     machine: true
     steps:
       - checkout
@@ -46,12 +45,10 @@ jobs:
 
 workflows:
   version: 2
-  #build_test:
-  #  jobs:
-  #    - build_test
-  #    - publish:
-  #        requires:
   build_test:
+    jobs:
+      - build_test
+  release:
     jobs:
       - publish
 
