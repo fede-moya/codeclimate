@@ -31,8 +31,6 @@ jobs:
       - run: install_hub
       - run: login_to_dockerhub
       - run: login_to_rubygems
-          name: Install Hub
-          command: install_hub
       - run:
           command: |
             if publish?; then
