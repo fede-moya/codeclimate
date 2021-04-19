@@ -35,8 +35,8 @@ jobs:
       #    name: Login on Dockerhub
       #    command: login_to_dockerhub
       - run:
-        name: Login on RubyGems
-        command: login_to_rubygems
+          name: Login on RubyGems
+          command: login_to_rubygems
       - run:
           name: Publish new version
           command: |
