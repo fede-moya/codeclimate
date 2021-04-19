@@ -27,12 +27,15 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run:
+      - *init
+      - run: install_hub
+      - run: login_to_dockerhub
+      - run: login_to_rubygems
           name: Install Hub
           command: install_hub
       - run:
           command: |
-            if [ `git diff --quiet HEAD~ VERSION; echo $?` == 1 ]; then
+            if publish?; then
               ./bin/publish
             fi
 

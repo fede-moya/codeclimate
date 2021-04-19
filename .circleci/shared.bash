@@ -8,10 +8,21 @@ function login_to_dockerhub() {
   set -x
 }
 
+function login_to_rubygems() {
+  mkdir -p $HOME/.gem
+  touch $HOME/.gem/credentials
+  chmod 0600 $HOME/.gem/credentials
+  printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
+}
+
 function install_hub() {
     sudo apt update && sudo apt install -y git wget
     url="$(wget -qO- https://api.github.com/repos/github/hub/releases/latest | tr '"' '\n' | grep '.*/download/.*/hub-linux-amd64-.*.tgz')"
     wget -qO- "$url" | sudo tar -xzvf- -C /usr/bin --strip-components=2 --wildcards "*/bin/hub"
+}
+
+function publish?() {
+  `git diff --quiet HEAD~ VERSION; echo $?` == 1
 }
 
 #function install_cc_test_reporter() {
