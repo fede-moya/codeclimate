@@ -36,12 +36,6 @@ function upload_docker_images() {
   docker push "codeclimate/codeclimate:$VERSION"
 }
 
-function publish?() {
-  #`git diff --quiet HEAD~ VERSION; echo $?`
-  `git diff --quiet HEAD~ VERSION`
-  echo $?
-}
-
 function publish_new_version() {
   set +x
   # Build and push gem
