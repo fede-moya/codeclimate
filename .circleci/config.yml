@@ -33,7 +33,7 @@ jobs:
       - run: login_to_rubygems
       - run:
           command: |
-            if test publish?; then
+            if [ publish? ]; then
               ./bin/publish
             fi
 
