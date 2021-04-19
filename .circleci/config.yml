@@ -28,10 +28,17 @@ jobs:
     steps:
       - checkout
       - *init
-      - run: install_hub
-      #- run: login_to_dockerhub
-      - run: login_to_rubygems
       - run:
+          name: Install Hub dependency
+          command: install_hub
+      #- run:
+      #    name: Login on Dockerhub
+      #    command: login_to_dockerhub
+      - run:
+        name: Login on RubyGems
+        command: login_to_rubygems
+      - run:
+          name: Publish new version
           command: |
             if [ publish? ]; then
               publish_new_version
