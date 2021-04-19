@@ -37,7 +37,7 @@ function upload_docker_images() {
 }
 
 function publish?() {
-  `git diff --quiet HEAD~ VERSION; echo $?` == 1
+  `git diff --quiet HEAD~ VERSION; echo $?`
 }
 
 function publish_new_version() {

@@ -40,7 +40,7 @@ jobs:
       - run:
           name: Publish new version
           command: |
-            if [ publish? ]; then
+            if [ publish? -eq 1 ]; then
               publish_new_version
             fi
 
