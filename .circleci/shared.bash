@@ -26,7 +26,7 @@ function login_to_rubygems() {
 function tag_version() {
   ARTIFACTS_OUTPUT=binaries.tar.gz
   tar -c -f "${ARTIFACTS_OUTPUT}" ./*.gem
-  GITHUB_TOKEN="${GITHUB_TOKEN}" hub release create -a "${ARTIFACTS_OUTPUT}" -m "v${VERSION}" "${VERSION}"
+  GITHUB_TOKEN="${GITHUB_TOKEN}" hub release create -a "${ARTIFACTS_OUTPUT}" -m "v${VERSION}" "v${VERSION}"
 }
 
 function upload_docker_images() {
