@@ -36,6 +36,13 @@ function upload_docker_images() {
   docker push "codeclimate/codeclimate:$VERSION"
 }
 
+function trigger_hombrew_workflow() {
+  -X POST\
+  -u username:$GITHUB_TOKEN \
+  https://api.github.com/repos/fede-moya/homebrew-formulae/actions/workflows/manual.yml/dispatches \
+  -d '{"ref":"master","inputs":{"version":"$VERSION"}}'
+}
+
 function publish_new_version() {
   set +x
   # Build and push gem
@@ -47,6 +54,9 @@ function publish_new_version() {
 
   # Push docker images
   upload_docker_images
+
+  # Triger hombrew release
+  trigger_hombrew_workflow
 
   set -x
 }
