@@ -40,7 +40,7 @@ function trigger_hombrew_workflow() {
   curl -X POST\
   -u username:$GITHUB_TOKEN \
   https://api.github.com/repos/fede-moya/homebrew-formulae/actions/workflows/manual.yml/dispatches \
-  -d '{"ref":"master","inputs":{"version":"$VERSION"}}'
+  -d "{\"ref\":\"master\",\"inputs\":{\"version\":\"$VERSION\"}}"
 }
 
 function publish_new_version() {
