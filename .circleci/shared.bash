@@ -53,7 +53,7 @@ function publish_new_version() {
   tag_version
 
   # Push docker images
-  upload_docker_images
+  #upload_docker_images
 
   # Triger hombrew release
   trigger_hombrew_workflow
